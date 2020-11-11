@@ -117,7 +117,7 @@ try:
         # instantiate an IP header from the first 20 bytes in raw_buffer
         ip_header = IP(raw_buffer[0:20])
 
-        print "Protocol: %s %s -> %s" % (ip_header.protocol, ip_header.src_address, ip_header.dst_address)
+        print("Protocol: %s %s -> %s" % (ip_header.protocol, ip_header.src_address, ip_header.dst_address))
 
         if ip_header.protocol == "ICMP":
 
@@ -133,7 +133,7 @@ try:
                 if IPAddress(ip_header.src_address) in IPNetwork(subnet):
 
                     if raw_buffer[len(raw_buffer) - len(magic_message):] == magic_message: 
-                        print "Host up: %s" % ip_header.src
+                        print("Host up: %s" % ip_header.src)
 
             
 except KeyboardInterrupt:

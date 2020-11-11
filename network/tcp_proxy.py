@@ -11,7 +11,7 @@ def hexdump(src, length=16):
         text = b''.join([x if 0x20 <= ord(x) < 0x7F else b'.' for x in s])
         result.append( b"%04X %-*s %s" % (i, length*(digits +1), hexa, text))
 
-    print b'\n'.join(result)
+    print(b'\n'.join(result))
 
 def receive_from(connection):
 
@@ -61,7 +61,7 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
         remote_buffer = response_handler(remote_buffer)
 
         if len(remote_buffer):
-            print "[<==] Sending %d bytes to localhost." % len(remote_buffer)
+            print("[<==] Sending %d bytes to localhost." % len(remote_buffer))
             client_socket.send(remote_buffer)
 
     while True:
@@ -69,30 +69,30 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
         local_buffer = receive_from(client_socket)
         
         if len(local_buffer):
-            print "[==>] Received %d bytes from localhost." % len(local_buffer)
+            print("[==>] Received %d bytes from localhost." % len(local_buffer))
             hexdump(local_buffer)
 
             local_buffer = request_handler(local_buffer)
 
             remote_socket.send(local_buffer)
-            print "[==>] Sent to remote."
+            print("[==>] Sent to remote.")
 
         remote_buffer = receive_from(remote_socket)
 
         if len(remote_buffer):
-            print "[<==] Received %d bytes from remote." % len(remote_buffer)
+            print("[<==] Received %d bytes from remote." % len(remote_buffer))
             hexdump(remote_buffer)
 
             remote_buffer = response_handler(remote_buffer)
 
             client_socket.send(remote_buffer)
 
-            print "[<==] Sent to remote."
+            print("[<==] Sent to remote.")
 
         if not len(local_buffer) or not len(remote_buffer):
             client_socket.close()
             remote_socket.close()
-            print "[*] No more data. Closing connections..."
+            print("[*] No more data. Closing connections...")
 
             break
 
@@ -104,18 +104,18 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
     try:
         server.bind((local_host, local_port))
     except:
-        print "[!!!] Failed to listen on %s:%d" % (local_host, local_port)
-        print "[!!!] CHeck for other listening sockets or creect permissions."
+        print("[!!!] Failed to listen on %s:%d" % (local_host, local_port))
+        print("[!!!] CHeck for other listening sockets or creect permissions.")
         sys.exit(0)
 
-    print "[*] LIstening on %s:%d" % (local_host, local_port)
+    print("[*] Listening on %s:%d" % (local_host, local_port))
 
     server.listen(5)
 
     while True:
         client_socket, addr = server.accept()
 
-        print "[==>] REceived incoming connection from %s:%d" % (addr[0], addr[1])
+        print("[==>] REceived incoming connection from %s:%d" % (addr[0], addr[1]))
 
         proxy_thread = threading.Thread(target=proxy_handler, args=(client_socket, remote_host, remote_port, receive_first))
 
@@ -124,8 +124,8 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
 
 def main():
     if len(sys.argv[1:]) != 5:
-        print "Usage: ./tcp_proxy.py [localhost] [localport] [remotehost] [remoteport] [receive_first]"
-        print "Example: ./tcp_proxy.py 127.0.0.1 9000 10.12.132.1 9000 True"
+        print("Usage: ./tcp_proxy.py [localhost] [localport] [remotehost] [remoteport] [receive_first]")
+        print("Example: ./tcp_proxy.py 127.0.0.1 9000 10.12.132.1 9000 True")
         sys.exit(0)
 
     local_host = sys.argv[1]

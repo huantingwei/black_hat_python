@@ -48,7 +48,7 @@ def client_sender(buffer):
                 response += data
                 if recv_len < 4096:
                     break
-            print response,
+            print(response)
 
             # wait for more input
             buffer = raw_input("")
@@ -57,7 +57,7 @@ def client_sender(buffer):
             client.send(buffer)
 
     except:
-        print "[*] Exception! Exiting..."
+        print("[*] Exception! Exiting...")
         client.close()
 
 def client_handler(client_socket):
@@ -66,7 +66,7 @@ def client_handler(client_socket):
     global command
 
     if len(upload_destination):
-        print "upload files"
+        print("upload files")
         file_buffer = ""
         while True:
             data = client_socket.recv(1024)
@@ -115,7 +115,7 @@ def server_loop():
 
     while True:
         client_socket, addr = server.accept()
-        print addr
+        print(addr)
         # print "Receives client from %s" % addr
 
         # start a thread to process a new client
@@ -146,20 +146,20 @@ def main():
 
     if not len(sys.argv[1:]):
         # usage()
-        print "usage()"
+        print("usage()")
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hle:t:p:cu:", ["help", "listen", "execute", "target", "port", "command", "upload"])
     
     except getopt.GetoptError as err:
-        print str(err)
+        print(str(err))
         # usage()
     
     
     for o,a in opts:
         if o in ("-h", "--help"):
             # usage()
-            print "usage()"
+            print("usage()")
         elif o in ("-l", "--listen"):
             listen = True
         elif o in ("-e", "--execute"):

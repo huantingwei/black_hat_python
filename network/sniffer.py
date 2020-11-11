@@ -36,9 +36,9 @@ if os.name == "nt":
     sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
 
 # read `one` packet
-print sniffer.recvfrom(65565)
+print(sniffer.recvfrom(65565))
 
 # if Windows, turn of "promiscuous mode"
-if os.name =="nt":
+if os.name == "nt":
     sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
 

@@ -88,7 +88,7 @@ try:
         # instantiate an IP header from the first 20 bytes in raw_buffer
         ip_header = IP(raw_buffer[0:20])
 
-        print "Protocol: %s %s -> %s" % (ip_header.protocol, ip_header.src_address, ip_header.dst_address)
+        print("Protocol: %s %s -> %s" % (ip_header.protocol, ip_header.src_address, ip_header.dst_address))
 
         if ip_header.protocol == "ICMP":
 
@@ -98,7 +98,7 @@ try:
 
             icmp_header = ICMP(buf)
 
-            print "ICMP -> Type: %d Code %d" % (icmp_header.type, icmp_header.code)
+            print("ICMP -> Type: %d Code %d" % (icmp_header.type, icmp_header.code))
 
             
 except KeyboardInterrupt:
